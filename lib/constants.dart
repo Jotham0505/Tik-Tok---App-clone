@@ -9,8 +9,7 @@ import 'package:tiktok/views/widgets/screens/video_screen.dart';
 
 
 List pages = [
-  //VideoScreen(),
-  Text('Home Screen'),
+  VideoScreen(),
   Text('Search Screen'),
   const AddVideoScreen(),
   Text('Messages Screen'),

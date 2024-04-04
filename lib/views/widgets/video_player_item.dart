@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:tiktok/constants.dart';
 
 class VideoPlayerItem extends StatefulWidget {
 
@@ -18,12 +19,15 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    videoPlayerController =
-        VideoPlayerController.networkUrl(widget.videoUrl as Uri)
-          ..initialize().then((value) {
-            videoPlayerController.play();
-            videoPlayerController.setVolume(1);
-          });
+    videoPlayerController = VideoPlayerController.network(widget.videoUrl)..initialize().then((_){ // Check this again 
+      videoPlayerController.play();
+      videoPlayerController.setVolume(1);
+    });
+        //VideoPlayerController.network(widget.videoUrl)
+          //..initialize().then((_) {
+            //videoPlayerController.play();
+            //videoPlayerController.setVolume(1);
+          //});
   }
 
   @override
@@ -42,9 +46,11 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
       decoration: const BoxDecoration(
         color: Colors.black
       ),
-      child: VideoPlayer(
-        videoPlayerController
-      ),
+      child: videoPlayerController.value.isInitialized ? AspectRatio(
+        aspectRatio: videoPlayerController.value.aspectRatio,
+        child: VideoPlayer(videoPlayerController),
+        )
+        : Center(child: CircularProgressIndicator(),)
     );
   }
 }

@@ -10,14 +10,15 @@ import 'package:video_compress/video_compress.dart';
 class UploadVideoController extends GetxController{
 
 
-  _compressVideo(String videoPath)async{
-    final compressedVideo = await VideoCompress.compressVideo(videoPath, quality: VideoQuality.MediumQuality);
-    return compressedVideo!.file;
-  }
+  //_compressVideo(String videoPath)async{
+    //final compressedVideo = await VideoCompress.compressVideo(videoPath, quality: VideoQuality.MediumQuality);
+    //return compressedVideo!.file;
+  //}
 
   Future<String> _uploadVideoToStorage(String id, String videoPath) async {
     Reference ref = firebaseStorage.ref().child('videos').child(id);
-    UploadTask uploadTask = ref.putFile( await _compressVideo(videoPath));
+    File videoFile = File(videoPath);
+    UploadTask uploadTask = ref.putFile(videoFile);
     TaskSnapshot snap = await uploadTask;
     String downloadUrl = await snap.ref.getDownloadURL();
     return downloadUrl;
@@ -38,7 +39,7 @@ class UploadVideoController extends GetxController{
 
   // upload video
   uploadVideo(String songName, String caption, String videoPath) async {
-    try {
+   // try {
       String uid = firebaseAuth.currentUser!.uid;
       DocumentSnapshot userDoc = await firestore.collection('users').doc(uid).get();
       // get id
@@ -61,18 +62,15 @@ class UploadVideoController extends GetxController{
         profilePhoto: (userDoc.data()! as Map<String, dynamic>)["profilePhoto"],
       );
 
-      await firestore.collection('videos').doc("Video $len").set(
-        video.toJson(),
-      );
-
+     await firestore.collection('videos').add(video.toJson());
       Get.back();
 
-    } catch (e) {
-      Get.snackbar(
-        'Erro uploading the video',
-        e.toString(),
-      );
-    }
+    //} catch (e) {
+      //Get.snackbar(
+        //'Error uploading the video',
+        //e.toString(),
+      //);
+    //}
   }
 
 }
