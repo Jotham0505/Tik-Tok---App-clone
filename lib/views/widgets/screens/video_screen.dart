@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:tiktok/constants.dart';
 import 'package:tiktok/controllers/video_controller.dart';
 import 'package:tiktok/views/widgets/circle_animation.dart';
+import 'package:tiktok/views/widgets/screens/comments_screen.dart';
 import 'package:tiktok/views/widgets/video_player_item.dart';
 import 'package:video_player/video_player.dart';
 
@@ -175,7 +176,9 @@ class VideoScreen extends StatelessWidget {
                                       height: 20,
                                     ),
                                     InkWell(
-                                      onTap: () {},
+                                      onTap: () {
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => commentScreen(id: data.id,)));
+                                      },
                                       child: Icon(
                                         Icons.comment,
                                         size: 40,

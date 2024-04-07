@@ -22,12 +22,10 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
     videoPlayerController = VideoPlayerController.network(widget.videoUrl)..initialize().then((_){ // Check this again 
       videoPlayerController.play();
       videoPlayerController.setVolume(1);
+      setState(() {
+        
+      });
     });
-        //VideoPlayerController.network(widget.videoUrl)
-          //..initialize().then((_) {
-            //videoPlayerController.play();
-            //videoPlayerController.setVolume(1);
-          //});
   }
 
   @override
@@ -53,4 +51,4 @@ class _VideoPlayerItemState extends State<VideoPlayerItem> {
         : Center(child: CircularProgressIndicator(),)
     );
   }
-}
+} 
